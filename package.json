@@ -4,6 +4,7 @@
   "description": "Group game similar to the physical game titled 'Things'",
   "main": "index.js",
   "scripts": {
+    "build:client": "webpack --config webpack.client.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Isaac Parker <parrotmac@gmail.com>",
@@ -11,5 +12,14 @@
   "dependencies": {
     "express": "^4.15.4",
     "socket.io": "^2.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "css-loader": "^0.28.5",
+    "react": "^15.6.1",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.5.5"
   }
 }
