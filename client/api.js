@@ -1,12 +1,12 @@
-var socket = io.connect(window.location.origin);
+let socket = io.connect(window.location.origin);
 socket.on('news', function (data) {
     console.log(data);
     socket.emit('my other event', { my: 'data' });
 });
 
-var debugOutput = document.querySelector("#debugOutput");
+let debugOutput = document.querySelector("#debugOutput");
 
-var state = {
+let state = {
     status: "disconnected"
 };
 export function updateStatus() {
