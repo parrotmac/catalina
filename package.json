@@ -1,7 +1,7 @@
 {
   "name": "catalina",
   "version": "0.1.0",
-  "description": "Group game similar to the physical game titled 'things'",
+  "description": "Group game similar to the physical game titled 'Things'",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
