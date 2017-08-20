@@ -12,9 +12,7 @@ server.listen(serverPort, function () {
   console.log('App listening on port ' + serverPort);
 })
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'static/index.html'));
-})
+app.use (express.static (path.resolve (__dirname, 'static')))
 
 app.get('/things', (req, res) => {
   res.send(JSON.stringify(thingList));
