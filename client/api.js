@@ -1,4 +1,3 @@
-
 var socket = io.connect(window.location.origin);
 socket.on('news', function (data) {
     console.log(data);
@@ -52,6 +51,13 @@ socket.on('removed-user', data => {
         }
     }
 })
+
+export function nextRound(user) {
+    /* Call to start game or advance to next round */
+    socket.emit("next-round", {
+        user: user
+    });
+}
 
 export function submitResponse(user, response, cardIndex) {
     /*
