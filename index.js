@@ -13,7 +13,7 @@ server.listen(serverPort, function () {
 })
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'site/index.html'));
+  res.sendFile(path.join(__dirname, 'static/index.html'));
 })
 
 app.get('/things', (req, res) => {
@@ -21,7 +21,7 @@ app.get('/things', (req, res) => {
 })
 
 app.get('/host', (req, res) => {
-  res.sendFile(path.join(__dirname, 'site/host.html'));
+  res.sendFile(path.join(__dirname, 'static/host.html'));
 })
 
 var users = [];
