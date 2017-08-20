@@ -36,6 +36,11 @@ module.exports = {
 		extensions: [ '.js', '.css' ],
 	},
 	plugins: [
+		new webpack.ProvidePlugin ({
+			'_': 'lodash',
+			'c': 'classnames',
+			'React': 'react',
+		}),
 		...(process.env.NODE_ENV === 'production' ? [
 			new webpack.optimize.UglifyJsPlugin (),
 			new webpack.optimize.AggressiveMergingPlugin (),
