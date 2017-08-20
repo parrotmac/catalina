@@ -1,0 +1,15 @@
+{
+  "name": "catalina",
+  "version": "0.1.0",
+  "description": "Group game similar to the physical game titled 'things'",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Isaac Parker <parrotmac@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.4",
+    "socket.io": "^2.0.3"
+  }
+}

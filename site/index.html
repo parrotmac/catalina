@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Catalina</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <pre id="debugOutput"></pre>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter your name">
+                    <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="button">Join</button>
+                            </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect(window.location.origin);
+        socket.on('news', function (data) {
+            console.log(data);
+            socket.emit('my other event', { my: 'data' });
+        });
+
+        var debugOutput = document.querySelector("#debugOutput");
+
+        var state = {
+            status: "disconnected"
+        };
+        function updateStatus() {
+            // Update DOM
+            console.log(state);
+            // debugOutput.innerHTML = JSON.stringify(state);
+        }
+
+        function joinAs(username) {
+            socket.emit("join-as", username);
+            state.requestedName = username;
+            updateStatus();
+        }
+        socket.on('user-join-response', data => {
+            if (data.status === "success") {
+                if (data.username == state.requestedName) {
+                    state.username = data.username;
+                    delete state.requestedName;
+                    state.status = "connected";
+                    updateStatus();
+                }
+            } else {
+                // This isn't available in React, but IDK what we want to do instead
+                alert("That username isn't available");
+                delete state.requestedName;
+            }
+        })
+
+        function removeUser(username) {
+            socket.emit("remove-user", username);
+        }
+        socket.on('removed-user', data => {
+            if (data.username === state.username) {
+                state.username = null;
+                state.status = "disconnected";
+                updateStatus();
+            }
+        })
+    </script>
+</body>
+
+</html>
