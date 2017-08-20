@@ -6,7 +6,7 @@ module.exports = {
 		app: [ resolve ('./client/app.js') ],
 	},
 	output: {
-		path: resolve ('./site'),
+		path: resolve ('./static'),
 		publicPath: '/',
 		filename: 'bundle.[name].js',
 	},
