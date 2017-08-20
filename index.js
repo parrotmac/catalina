@@ -27,13 +27,37 @@ app.get('/host', (req, res) => {
 var users = [];
 
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
 
   socket.on('join-as', data => {
-
+    if(users.indexOf(data.username) < 0) {
+      users.push(data.username)
+      socket.emit('user-join-response', {
+        username: data.username,
+        status: 'success'
+      })
+    } else {
+      socket.emit('user-join-response', {
+        status: 'failure'
+      })
+    }
   });
+
+
+  socket.on('remove-user', data => {
+    const deadUserIndex = users.indexOf(data.username);
+    if(deadUserIndex > -1) {
+      users.splice(deadUserIndex, 1);
+      socket.emit('removed-user', {
+        username: data.username,
+        status: 'success'
+      })
+    } else {
+      socket.emit('removed-user', {
+        username: username,
+        status: 'failure'
+      })
+    }
+  });
+
 });
 

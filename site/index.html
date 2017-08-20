@@ -46,7 +46,9 @@
         }
 
         function joinAs(username) {
-            socket.emit("join-as", username);
+            socket.emit("join-as", {
+                username: username
+            });
             state.requestedName = username;
             updateStatus();
         }
@@ -54,25 +56,29 @@
             if (data.status === "success") {
                 if (data.username == state.requestedName) {
                     state.username = data.username;
-                    delete state.requestedName;
                     state.status = "connected";
                     updateStatus();
                 }
             } else {
                 // This isn't available in React, but IDK what we want to do instead
                 alert("That username isn't available");
-                delete state.requestedName;
             }
         })
 
         function removeUser(username) {
-            socket.emit("remove-user", username);
+            socket.emit("remove-user", {
+                username: username
+            });
         }
         socket.on('removed-user', data => {
             if (data.username === state.username) {
-                state.username = null;
-                state.status = "disconnected";
-                updateStatus();
+                if(data.status === 'success') {
+                    state.username = null;
+                    state.status = "disconnected";
+                    updateStatus();
+                } else {
+                    alert("Unable to remove " + data.username);
+                }
             }
         })
     </script>
