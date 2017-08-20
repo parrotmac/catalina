@@ -18,10 +18,12 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-inferno": "^3.2.0",
     "babel-preset-env": "^1.6.0",
     "classnames": "^2.2.5",
     "css-loader": "^0.28.5",
-    "react": "^15.6.1",
+    "inferno": "^3.7.1",
+    "inferno-component": "^3.7.1",
     "style-loader": "^0.18.2",
     "webpack": "^3.5.5"
   }

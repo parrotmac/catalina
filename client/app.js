@@ -1,2 +1,2 @@
-class App extends React.Component {
+class App extends Component {
 }

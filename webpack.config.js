@@ -20,7 +20,8 @@ module.exports = {
 				use: [ {
 					loader: 'babel-loader',
 					options: {
-						presets: [ 'react', 'env' ],
+						presets: [ 'env' ],
+						plugins: [ 'inferno' ],
 					},
 				} ],
 			},
@@ -39,7 +40,8 @@ module.exports = {
 		new webpack.ProvidePlugin ({
 			'_': 'lodash',
 			'c': 'classnames',
-			'React': 'react',
+			'Inferno': 'inferno',
+			'Component': 'inferno-component',
 		}),
 		...(process.env.NODE_ENV === 'production' ? [
 			new webpack.optimize.UglifyJsPlugin (),
