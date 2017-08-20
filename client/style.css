@@ -1,0 +1,25 @@
+.root {
+	display: flex;
+	position: absolute;
+	top: 0; bottom: 0;
+	left: 0; right: 0;
+	font: 300 20px montserrat;
+}
+.logo {
+	color: #aaa;
+	font-weight: 700;
+}
+.logo[size=small] {
+	font-size: 40px;
+}
+.logo[size=large] {
+	font-size: 80px;
+}
+.page {
+	display: flex;
+	flex-grow: 1;
+}
+.page-center {
+	align-items: center;
+	justify-content: center;
+}
