@@ -4,7 +4,8 @@
   "description": "Group game similar to the physical game titled 'Things'",
   "main": "index.js",
   "scripts": {
-    "build:client": "webpack --config webpack.client.js",
+    "build": "webpack --config webpack.config.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Isaac Parker <parrotmac@gmail.com>",
