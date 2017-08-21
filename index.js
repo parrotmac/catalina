@@ -74,11 +74,30 @@ let roundState = {
     cardIndex: 0,
     allowingResponsesFor: 30,
     isAcceptingResponses: true,
+    judgingSubmissionIndex: -1,
     submissions: []
 };
 
 function nextRoundAvailable() {
     return roundState.cardIndex + 1 < thingList.length;
+}
+
+function getNextJudgingIndex() {
+    let availableSubmissionIndexes = [];
+    roundState.submissions.forEach( (submission, idx) => {
+        if(!submission.beenVotedOn) {
+            availableSubmissionIndexes.push(idx);
+        }
+    });
+
+    console.log(availableSubmissionIndexes);
+
+    if(availableSubmissionIndexes.length > 0) {
+        const randomIndex = Math.floor(Math.random()*availableSubmissionIndexes.length);
+        console.log(randomIndex);
+        return randomIndex;
+    }
+    return -1;
 }
 
 function beginRound(updateStateCallback) {
@@ -89,6 +108,7 @@ function beginRound(updateStateCallback) {
     }, () => {
         // Completed
         roundState.isAcceptingResponses = false;
+        roundState.judgingSubmissionIndex = getNextJudgingIndex();
         updateStateCallback();
     });
 }
@@ -98,6 +118,7 @@ function beginNextRound(updateStateCallback) {
     roundState.cardIndex += 1;
     roundState.allowingResponsesFor = 30;
     roundState.isAcceptingResponses = true;
+    roundState.judgingSubmissionIndex = -1;
     roundState.submissions = [];
 
     updateStateCallback();
@@ -109,6 +130,7 @@ function submitAnswer(user, response, cardIndex) {
         let newSubmission = {
             username: user,
             response: response,
+            beenVotedOn: false,
             guesses: []
         };
         roundState.submissions.push(newSubmission);
@@ -181,6 +203,16 @@ io.on('connection', function (socket) {
     function updateState() {
         io.emit("status-update", roundState);
     }
+
+
+
+    function nextSubmission() {
+        // Done with accepting submissions
+        roundState.judgingSubmissionIndex = getNextJudgingIndex();
+        updateState();
+    }
+
+    socket.on('next-submission', nextSubmission);
 
     socket.on('next-round', data => {
         if(!gameState.isStarted) {

@@ -65,6 +65,12 @@ export function submitGuess(user, submissionIndex, suspect, cardIndex) {
     })
 }
 
+export function nextSubmission(user) {
+    socket.emit('next-submission', {
+        user: user
+    });
+}
+
 let statusCallback = () => {};
 export function setStatusCallback(callback) {
     statusCallback = callback;
