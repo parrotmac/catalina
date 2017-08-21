@@ -1,56 +1,35 @@
 let socket = io.connect(window.location.origin);
-socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-});
 
-let debugOutput = document.querySelector("#debugOutput");
-
-let state = {
-    status: "disconnected"
-};
-export function updateStatus() {
-    // Update DOM
-    console.log(state);
-    // debugOutput.innerHTML = JSON.stringify(state);
-}
-
-export function joinAs(username) {
+export function joinAs(username, callback) {
     socket.emit("join-as", {
         username: username
     });
-    state.requestedName = username;
-    updateStatus();
-}
-socket.on('user-join-response', data => {
-    if (data.status === "success") {
-        if (data.username == state.requestedName) {
-            state.username = data.username;
-            state.status = "connected";
-            updateStatus();
-        }
-    } else {
-        // This isn't available in React, but IDK what we want to do instead
-        alert("That username isn't available");
+    socket.on('user-join-response', callback);
+    /*
+    callback gets called with an object containing
+    {
+        username: <(string) user's username>,
+        status: <(string) 'success' or 'failure'>,
+        thingsList: <(array<string>) containing questions for the group>
     }
-})
+    Note: this could be emitted to every user, so check the returned username against a stored username
+     */
+}
 
-export function removeUser(username) {
+export function removeUser(username, callback) {
     socket.emit("remove-user", {
         username: username
     });
-}
-socket.on('removed-user', data => {
-    if (data.username === state.username) {
-        if (data.status === 'success') {
-            state.username = null;
-            state.status = "disconnected";
-            updateStatus();
-        } else {
-            alert("Unable to remove " + data.username);
-        }
+    socket.on('removed-user', callback);
+    /*
+    callback gets called with an object containing
+    {
+        username: <(string) user's username>,
+        status: <(string) 'success' or 'failure'>
     }
-})
+    Note: As above, check the returned username against a local string to ensure relevance
+     */
+}
 
 export function nextRound(user) {
     /* Call to start game or advance to next round */
@@ -72,13 +51,25 @@ export function submitResponse(user, response, cardIndex) {
     })
 }
 
-let statusCallbacks = [];
-export function addStatusUpdate(callback) {
-    statusCallbacks.push(callback);
+export function submitGuess(user, submissionIndex, suspect, cardIndex) {
+    /*
+    user: Username of player which is submitting their guess
+    submissionIndex: Index inside submission array
+    suspect: username of player being guessed
+     */
+    socket.emit('submit-guess', {
+        user: user,
+        submissionIndex: submissionIndex,
+        suspect: suspect,
+        cardIndex: cardIndex
+    })
+}
+
+let statusCallback = () => {};
+export function setStatusCallback(callback) {
+    statusCallback = callback;
 }
 
 socket.on('status-update', newState => {
-    for (let i = 0; i < statusCallbacks.length; i++) {
-        statusCallbacks[i](newState);
-    }
+    statusCallback(newState);
 });
