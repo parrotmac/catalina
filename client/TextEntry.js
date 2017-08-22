@@ -1,4 +1,4 @@
-export default class TextEntry extends Component {
+export default class extends Component {
 	componentDidMount () {
 		this.input.value = ''
 	}

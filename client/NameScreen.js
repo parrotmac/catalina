@@ -7,9 +7,11 @@ export default class NameScreen extends Component {
 	}
 	render () {
 		return (
-			<div class="page page-center">
-				<Logo size="large"/>
-				<TextEntry onSubmit={ this.onSubmit }/>
+			<div class="window">
+				<div class="page page-center name-screen">
+					<Logo size="large"/>
+					<TextEntry onSubmit={ this.onSubmit }/>
+				</div>
 			</div>
 		)
 	}

@@ -1,34 +1,50 @@
 import NameScreen from 'client/NameScreen'
-import Topbar from 'client/Topbar'
-import { joinAs } from 'client/api'
+import StartScreen from 'client/StartScreen'
+import { joinAs, getThings, nextRound } from 'client/api'
 
-export default class Root extends Component {
+export default class extends Component {
 	constructor () {
 		super ()
 		this.state = {
-			username: localStorage.getItem ('N') || null,
+			username: null,
+			usernameFailed: false,
+			readyToStart: false,
+			thingsList: null,
+			state: null,
 		}
+		const username = localStorage.getItem ('N')
+		if (username) this.setUsername (username)
 	}
 	render () {
-		const { username } = this.state
+		const { username, usernameFailed } = this.state
 		if (!username) {
 			return (
-				<div class="window">
-					<NameScreen onUsernameChosen={ this.onUsernameChosen }/>
-				</div>
+				<NameScreen onUsernameChosen={ this.onUsernameChosen } usernameFailed={ usernameFailed }/>
 			)
 		}
-		return (
-			<div class="window">
-				<Topbar username={ username }/>
-			</div>
-		)
+		if (true) {
+			return (
+				<StartScreen username={ username } title="START" onStart={ this.onStartGame }/>
+			)
+		}
 	}
 	onUsernameChosen = (username) => {
 		localStorage.setItem ('N', username)
-		joinAs (username, () => {
-			this.setState ({ username })
+		this.setUsername (username)
+	}
+	setUsername (username) {
+		joinAs (username, ({ username, status }) => {
+			if (status === 'success') {
+				getThings (thingsList => {
+					this.setState ({ usernameFailed: false, username, thingsList })
+				})
+			} else {
+				this.setState ({ usernameFailed: true })
+			}
 		})
+	}
+	onStartGame = () => {
+		nextRound (this.state.username)
 	}
 }
 
