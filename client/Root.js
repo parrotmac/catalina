@@ -1,5 +1,6 @@
 import NameScreen from 'client/NameScreen'
 import Topbar from 'client/Topbar'
+import { joinAs } from 'client/api'
 
 export default class Root extends Component {
 	constructor () {
@@ -25,7 +26,9 @@ export default class Root extends Component {
 	}
 	onUsernameChosen = (username) => {
 		localStorage.setItem ('N', username)
-		this.setState ({ username })
+		joinAs (username, () => {
+			this.setState ({ username })
+		})
 	}
 }
 
