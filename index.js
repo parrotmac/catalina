@@ -225,6 +225,12 @@ io.on('connection', function (socket) {
         }
     });
 
+    socket.on('request-things-list', () => {
+        io.emit("things-list", {
+            thingsList: thingList
+        });
+    });
+
     socket.on('submit-answer', data => {
         const user = data.user;
         const response = data.response;

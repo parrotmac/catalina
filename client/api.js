@@ -31,6 +31,17 @@ export function removeUser(username, callback) {
      */
 }
 
+export function requestThingsList(callback) {
+    socket.emit('request-things-list', {});
+
+    socket.on("things-list", callback);
+    /*
+    {
+        thingsList: <(array<string>) List of strings of questions>
+    }
+    */
+}
+
 export function nextRound(user) {
     /* Call to start game or advance to next round */
     socket.emit("next-round", {
