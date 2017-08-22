@@ -1,7 +1,10 @@
 # catalina 🎸
-🎲 Group game similar to the physical game titled 'Things' 🎲
+[![Build Status](https://travis-ci.org/parrotmac/catalina.svg?branch=master)](https://travis-ci.org/parrotmac/catalina) [![David-DM](https://david-dm.org/parrotmac/catalina.svg)](https://david-dm.org/parrotmac/catalina)
 
 ---
+
+
+## 🎲 Group game similar to the physical game titled 'Things' 🎲
 
 # Usage
 
