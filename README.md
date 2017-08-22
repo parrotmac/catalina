@@ -1,5 +1,6 @@
 # catalina 🎸
-[![Build Status](https://travis-ci.org/parrotmac/catalina.svg?branch=master)](https://travis-ci.org/parrotmac/catalina) [![David-DM](https://david-dm.org/parrotmac/catalina.svg)](https://david-dm.org/parrotmac/catalina)
+[![Build Status](https://travis-ci.org/parrotmac/catalina.svg?branch=master)](https://travis-ci.org/parrotmac/catalina)
+[![dependencies Status](https://david-dm.org/parrotmac/catalina/status.svg)](https://david-dm.org/parrotmac/catalina)
 
 ---
 
