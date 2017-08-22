@@ -1,3 +1,6 @@
+html {
+	background-color: #ecf0f3;
+}
 .root {
 	display: flex;
 	position: absolute;
