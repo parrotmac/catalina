@@ -13,6 +13,19 @@ module.exports = {
 	target: 'web',
 	module: {
 		rules: [
+            {
+                test: /\.scss$/,
+                include: resolve ('.'),
+                use: [
+                    {
+                        loader: "style-loader" // creates style nodes from JS strings
+                    }, {
+                        loader: "css-loader" // translates CSS into CommonJS
+                    }, {
+                        loader: "sass-loader" // compiles Sass to CSS
+                    }
+                ]
+            },
 			{
 				test: /\.js$/,
 				include: resolve ('.'),
@@ -24,11 +37,6 @@ module.exports = {
 						plugins: [ 'inferno', 'transform-class-properties' ],
 					},
 				} ],
-			},
-			{
-				test: /\.css$/,
-				include: resolve ('.'),
-				use: [ 'style-loader', 'css-loader' ],
 			},
 		],
 	},

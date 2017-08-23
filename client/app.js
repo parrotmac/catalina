@@ -1,4 +1,4 @@
-import 'client/style'
+import 'client/style.scss'
 import Root from 'client/Root'
 
 import * as api from 'client/api'
