@@ -1,5 +1,6 @@
 sudo: true
 dist: trusty
+language: node_js
 jobs:
   include:
     - stage: build docker image
