@@ -1,2 +1,2 @@
 [config]
-command = npm install && npm run build && xcopy %DEPLOYMENT_SOURCE% %DEPLOYMENT_TARGET% /Y
+command = npm install && npm run build && xcopy %DEPLOYMENT_SOURCE% %DEPLOYMENT_TARGET% /Y /e
