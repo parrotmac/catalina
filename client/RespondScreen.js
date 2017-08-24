@@ -13,7 +13,7 @@ export default class extends Component {
 				<div class="page page-center respond-screen">
 					<p class="card-time">{ time }</p>
 					<p class="card-prompt">{ card }</p>
-					<TextEntry onSubmit={ this.onSubmit }/>
+					<TextEntry placeholder="Your response" onSubmit={ this.onSubmit }/>
 				</div>
 			</div>
 		)
