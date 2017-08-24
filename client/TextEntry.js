@@ -4,9 +4,9 @@ export default class extends Component {
 	}
 	render () {
 		return (
-			<form class="text-entry" onSubmit={ this.onSubmit }>
-				<input ref={ c => this.input = c } type="text"/>
-				<input type="submit" value="GO"/>
+			<form class="pill-input-group" onSubmit={ this.onSubmit }>
+				<input placeholder="Your new username" class="pill-group-input" ref={ c => this.input = c } type="text"/>
+				<input class="pill-group-button" type="submit" value="GO"/>
 			</form>
 		)
 	}

@@ -1,12 +1,16 @@
-html {
-	background-color: #ecf0f3;
-}
+$color-player: #2D95BF; /* Alt: #3366FF # */
+$color-thing: #4EBA6F; /* Alt: #00BB00 */
+$color-redish: #F15A5A;
+$color-yellowish: #F0C419;
+$color-purpleish: #955BA5;
+$color-gray: #95989A;
+
 .root {
 	display: flex;
 	position: absolute;
 	top: 0; bottom: 0;
 	left: 0; right: 0;
-	font: 300 20px montserrat;
+	font: 300 20px 'Baloo Bhaijaan', sans-serif;
 }
 .window {
 	display: flex;
@@ -14,21 +18,8 @@ html {
 	flex-grow: 1;
 	align-items: center;
 }
-.topbar {
-	display: flex;
-	border-bottom: 1px solid #888;
-	padding: 5px 0;
-	width: calc(100% - 20px);
-	align-items: center;
-}
-.topbar-left, .topbar-center, .topbar-right {
-	flex-grow: 1;
-	flex-basis: 0;
-}
-.topbar-center { text-align: center; }
-.topbar-right { text-align: right; }
 .logo {
-	color: #888;
+	color: $color-redish;
 	font-weight: 700;
 	text-align: center;
 }
@@ -44,12 +35,10 @@ html {
 	line-height: 55px;
 }
 .logo-large small {
+	color: $color-player;
 	display: block;
 	font-size: 13px;
 	line-height: 10px;
-}
-.username {
-	font-size: 15px;
 }
 .page {
 	display: flex;
@@ -73,4 +62,127 @@ button, input[type=button], input[type=submit] {
 	color: #fff;
 	padding: 9px 14px;
 	border: none;
+}
+
+/* Heading rules */
+header {
+
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 800px;
+	min-width: 240px;
+
+	.topbar {
+		display: flex;
+		justify-content: space-between;
+		margin: 0 25px;
+
+		.logo {
+			color: $color-redish;
+		}
+
+		.username {
+			color: $color-player;
+			margin: 8px 0;
+		}
+
+	}
+	.header-rule {
+		border-top: none;
+		border-left: none;
+		border-right: none;
+		margin: 0 25px;
+		border-bottom: 2px solid $color-thing;
+	}
+}
+
+/* Pill rules */
+@mixin pill-box($border-color, $background-color, $text-color) {
+	/* Adjustable options */
+	$pill-height: 40px;
+	$pill-max-width: 450px;
+
+	/* Pill styling */
+	height: $pill-height;
+	max-width: $pill-max-width;
+	border-radius: ($pill-height/2);
+	margin: 5px;
+	box-sizing: border-box;
+	border: 2px solid $border-color;
+	background-color: $background-color;
+
+	/* Text styling */
+	color: $text-color;
+	text-align: center;
+	font-size: 24px;
+}
+
+@mixin pill-input() {
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none;
+}
+
+@mixin pill-input-focused($glow-color) {
+	box-shadow: 0 0 5px $glow-color;
+	border: 2px solid $glow-color;
+}
+
+@mixin thing-input-pill($border-color, $background-color, $text-color) {
+	@include pill-box($border-color, $background-color, $text-color);
+	@include pill-input();
+	:focus {
+		@include pill-input-focused($border-color);
+	}
+}
+
+.user-pill.active {
+	@include pill-box($color-player, $color-player, white);
+}
+.user-pill {
+	@include pill-box($color-player, white, $color-player);
+}
+
+.thing-pill.active {
+	@include pill-box($color-thing, $color-thing, white);
+}
+.thing-pill {
+	@include pill-box($color-thing, white, $color-thing);
+}
+
+.action-pill {
+	@include pill-box($color-redish, white, $color-redish);
+	max-width: 140px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.thing-input-pill {
+	@include thing-input-pill($color-thing, white, $color-thing);
+}
+
+.pill-input-group {
+
+	>input.pill-group-input {
+		@include thing-input-pill($color-thing, white, $color-thing);
+
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+		border-right: 0;
+		margin-right: -3px;
+
+		&::placeholder {
+			color: $color-gray;
+		}
+	}
+	>.pill-group-button {
+		@include pill-box($color-thing, white, $color-thing);
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		padding: 0 8px 0 5px;
+		margin-left: 0;
+	}
 }
