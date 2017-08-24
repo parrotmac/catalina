@@ -1,9 +1,12 @@
 let socket = io.connect(window.location.origin);
 
 export function joinAs(username, callback) {
-    socket.emit("join-as", {
-        username: username
-    });
+
+    if (typeof(callback) !== "function") {
+        console.error("A `callback` parameter must be provided, otherwise Socket.io will fail permanently");
+        return
+    }
+
     socket.on('user-join-response', callback);
     /*
     callback gets called with an object containing
@@ -14,12 +17,19 @@ export function joinAs(username, callback) {
     }
     Note: this could be emitted to every user, so check the returned username against a stored username
      */
+
+    socket.emit("join-as", {
+        username: username
+    });
 }
 
 export function removeUser(username, callback) {
-    socket.emit("remove-user", {
-        username: username
-    });
+
+    if (typeof(callback) !== "function") {
+        console.error("A `callback` parameter must be provided, otherwise Socket.io will fail permanently");
+        return
+    }
+
     socket.on('removed-user', callback);
     /*
     callback gets called with an object containing
@@ -29,10 +39,18 @@ export function removeUser(username, callback) {
     }
     Note: As above, check the returned username against a local string to ensure relevance
      */
+
+    socket.emit("remove-user", {
+        username: username
+    });
 }
 
 export function requestThingsList(callback) {
-    socket.emit('request-things-list', {});
+
+    if (typeof(callback) !== "function") {
+        console.error("A `callback` parameter must be provided, otherwise Socket.io will fail permanently");
+        return
+    }
 
     socket.on("things-list", callback);
     /*
@@ -40,6 +58,8 @@ export function requestThingsList(callback) {
         thingsList: <(array<string>) List of strings of questions>
     }
     */
+
+    socket.emit('request-things-list', {});
 }
 
 export function nextRound(user) {
