@@ -7,8 +7,8 @@ jobs:
   include:
     - stage: build docker image
       script:
-      - docker login $DOCKER_REGISTRY -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t catalina .
       - docker images
-      - docker tag catalina $DOCKER_REGISTRY/catalina
-      - docker push $DOCKER_REGISTRY/catalina
+      - docker tag catalina $DOCKER_USERNAME/catalina
+      - docker push $DOCKER_USERNAME/catalina
