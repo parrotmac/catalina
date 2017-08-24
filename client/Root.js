@@ -3,7 +3,6 @@ import NameScreen from 'client/NameScreen'
 import StartScreen from 'client/StartScreen'
 import RespondScreen from 'client/RespondScreen'
 import WaitingScreen from 'client/WaitingScreen'
-import { joinAs, requestThingsList, nextRound } from 'client/api'
 import { joinAs, requestThingsList, nextRound, setStatusCallback, submitResponse } from 'client/api'
 
 export default class extends Component {
