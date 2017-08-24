@@ -1,7 +1,7 @@
 import Logo from 'client/Logo'
 import TextEntry from 'client/TextEntry'
 
-export default class NameScreen extends Component {
+export default class extends Component {
 	constructor () {
 		super ()
 	}
