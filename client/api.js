@@ -13,7 +13,6 @@ export function joinAs(username, callback) {
     {
         username: <(string) user's username>,
         status: <(string) 'success' or 'failure'>,
-        thingsList: <(array<string>) containing questions for the group>
     }
     Note: this could be emitted to every user, so check the returned username against a stored username
      */
