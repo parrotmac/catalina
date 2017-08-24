@@ -5,16 +5,13 @@ export default class Topbar extends Component {
 		const { username } = this.props
 
 		return (
-			<div class="topbar">
-				<div class="topbar-left">
+			<header>
+				<div class="topbar">
+					<h1 class="logo">catalina</h1>
+					<h2 class="username">{ username }</h2>
 				</div>
-				<div class="topbar-center">
-					<Logo size="small"/>
-				</div>
-				<div class="topbar-right">
-					<div class="username">{ username }</div>
-				</div>
-			</div>
+				<hr class="header-rule" />
+			</header>
 		)
 	}
 }
