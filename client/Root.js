@@ -1,6 +1,6 @@
 import NameScreen from 'client/NameScreen'
 import StartScreen from 'client/StartScreen'
-import { joinAs, getThings, nextRound } from 'client/api'
+import { joinAs, requestThingsList, nextRound } from 'client/api'
 
 export default class extends Component {
 	constructor () {
@@ -35,7 +35,7 @@ export default class extends Component {
 	setUsername (username) {
 		joinAs (username, ({ username, status }) => {
 			if (status === 'success') {
-				getThings (thingsList => {
+                requestThingsList (thingsList => {
 					this.setState ({ usernameFailed: false, username, thingsList })
 				})
 			} else {
