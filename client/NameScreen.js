@@ -10,7 +10,7 @@ export default class extends Component {
 			<div class="window">
 				<div class="page page-center name-screen">
 					<Logo size="large"/>
-					<TextEntry onSubmit={ this.onSubmit }/>
+					<TextEntry placeholder="Your new username" onSubmit={ this.onSubmit }/>
 				</div>
 			</div>
 		)

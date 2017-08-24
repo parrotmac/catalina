@@ -3,9 +3,10 @@ export default class extends Component {
 		this.input.value = ''
 	}
 	render () {
+		const { placeholder } = this.props
 		return (
 			<form class="pill-input-group" onSubmit={ this.onSubmit }>
-				<input placeholder="Your new username" class="pill-group-input" ref={ c => this.input = c } type="text"/>
+				<input placeholder={ placeholder } class="pill-group-input" ref={ c => this.input = c } type="text"/>
 				<input class="pill-group-button" type="submit" value="GO"/>
 			</form>
 		)
