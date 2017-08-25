@@ -1,7 +1,7 @@
 import Logo from 'client/Logo'
 import TextEntry from 'client/TextEntry'
 
-export default class NameScreen extends Component {
+export default class extends Component {
 	constructor () {
 		super ()
 	}
@@ -10,7 +10,7 @@ export default class NameScreen extends Component {
 			<div class="window">
 				<div class="page page-center name-screen">
 					<Logo size="large"/>
-					<TextEntry onSubmit={ this.onSubmit }/>
+					<TextEntry placeholder="Your new username" onSubmit={ this.onSubmit }/>
 				</div>
 			</div>
 		)
