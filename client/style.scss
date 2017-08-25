@@ -6,6 +6,7 @@ $color-purpleish: #955BA5;
 $color-gray: #95989A;
 
 * {
+	outline: none !important;
 	margin: 0;
 	padding: 0;
 }
@@ -53,20 +54,6 @@ $color-gray: #95989A;
 .page-center {
 	align-items: center;
 	justify-content: center;
-}
-
-* {
-	outline: none !important;
-}
-textarea, input[type=password], input[type=text] {
-	padding: 8px 4px;
-	border: 1px solid #ccc;
-}
-button, input[type=button], input[type=submit] {
-	background-color: #888;
-	color: #fff;
-	padding: 9px 14px;
-	border: none;
 }
 
 /* Heading rules */
@@ -159,7 +146,9 @@ header {
 }
 
 .action-pill {
-	@include pill-box($color-player, white, $color-player);
+	@include pill-box($color-thing, white, $color-thing);
+	padding-right: 10px;
+	padding-left: 10px;
 	max-width: 140px;
 	margin-left: auto;
 	margin-right: auto;
