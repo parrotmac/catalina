@@ -5,6 +5,11 @@ $color-yellowish: #F0C419;
 $color-purpleish: #955BA5;
 $color-gray: #95989A;
 
+* {
+	margin: 0;
+	padding: 0;
+}
+
 .root {
 	display: flex;
 	position: absolute;
@@ -154,7 +159,7 @@ header {
 }
 
 .action-pill {
-	@include pill-box($color-redish, white, $color-redish);
+	@include pill-box($color-player, white, $color-player);
 	max-width: 140px;
 	margin-left: auto;
 	margin-right: auto;
@@ -185,4 +190,31 @@ header {
 		padding: 0 8px 0 5px;
 		margin-left: 0;
 	}
+}
+
+/* StartScreen rules */
+.start-game {
+	.description {
+		color: $color-redish;
+	}
+}
+
+/* RespondScreen rules */
+.respond-screen {
+	.card-prompt {
+		color: $color-redish;
+	}
+}
+
+/* WaitingScreen rules */
+.waiting-screen {
+	.waiting-message {
+		color: $color-redish;
+	}
+
+}
+
+/* Misc Rules */
+.card-time {
+	color: $color-purpleish;
 }
