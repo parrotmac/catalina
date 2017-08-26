@@ -22,6 +22,7 @@ docker run -it --rm -p 80 catalina
 
 ### NPM/Node
 ```
+npm install
 npm run build
 npm run start
 ```
