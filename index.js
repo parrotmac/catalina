@@ -4,7 +4,9 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const path = require('path');
 
-const serverPort = process.env.PORT || '3000';
+const serverPort = process.env.PORT || '3000'
+
+const submissionTime = parseInt(process.env.SUBMISSION_TIME || 30)
 
 server.listen(serverPort, function () {
     console.log('App listening on port ' + serverPort);
@@ -42,6 +44,7 @@ roundState = {
     {
       username: "0x15AAC",
       response: "Pineapple",
+      beenVotedOn: true,
       guesses: [
         {
           guesser: "CluelessDude1",
@@ -59,6 +62,7 @@ roundState = {
     {
       username: "robbiewxyz",
       response: "Cantaloupe",
+      beenVotedOn: false,
       guesses: [
         ...
       ]
@@ -72,7 +76,7 @@ roundState = {
 
 let roundState = {
     cardIndex: 0,
-    allowingResponsesFor: 30,
+    allowingResponsesFor: submissionTime,
     isAcceptingResponses: true,
     judgingSubmissionIndex: -1,
     submissions: []
@@ -90,18 +94,18 @@ function getNextJudgingIndex() {
         }
     });
 
-    console.log(availableSubmissionIndexes);
+    console.log("availableSubmissionIndexes", availableSubmissionIndexes);
 
     if(availableSubmissionIndexes.length > 0) {
         const randomIndex = Math.floor(Math.random()*availableSubmissionIndexes.length);
-        console.log(randomIndex);
-        return randomIndex;
+        console.log(`Guessing on ${roundState.submissions[availableSubmissionIndexes[randomIndex]]}`);
+        return availableSubmissionIndexes[randomIndex];
     }
     return -1;
 }
 
 function beginRound(updateStateCallback) {
-    beginSteppedTimer(30, timeLeft => {
+    beginSteppedTimer(submissionTime, timeLeft => {
         // E'rry second
         roundState.allowingResponsesFor -= 1;
         updateStateCallback();
@@ -116,7 +120,7 @@ function beginRound(updateStateCallback) {
 function beginNextRound(updateStateCallback) {
     // Clean up round state
     roundState.cardIndex += 1;
-    roundState.allowingResponsesFor = 30;
+    roundState.allowingResponsesFor = submissionTime;
     roundState.isAcceptingResponses = true;
     roundState.judgingSubmissionIndex = -1;
     roundState.submissions = [];
@@ -140,11 +144,14 @@ function submitAnswer(user, response, cardIndex) {
 }
 
 function submitGuess(user, suspect, submissionIndex, cardIndex) {
-    if(roundState.cardIndex === cardIndex) {
+    if(roundState.cardIndex === cardIndex && roundState.submissions[submissionIndex].guesses.find(g => g.guesser === user) === undefined) {
         roundState.submissions[submissionIndex].guesses.push({
             guesser: user,
             guessed: suspect
         });
+        if(roundState.submissions[submissionIndex].guesses.length === roundState.submissions.length) {
+            roundState.submissions[submissionIndex].beenVotedOn = true;
+        }
     } else {
         console.error("Cannot add guess", arguments);
     }
@@ -216,12 +223,12 @@ io.on('connection', function (socket) {
 
     socket.on('next-round', data => {
         if(!gameState.isStarted) {
-            gameState.isStarted = true;
-            beginRound(updateState);
+            gameState.isStarted = true
+            beginRound(updateState)
         } else {
-            const user = data.user;
-            console.log(user, "requested a new round");
-            beginNextRound(updateState);
+            const user = data.user
+            console.log(`${user} requested a new round`)
+            beginNextRound(updateState)
         }
     });
 
@@ -232,22 +239,22 @@ io.on('connection', function (socket) {
     });
 
     socket.on('submit-answer', data => {
-        const user = data.user;
-        const response = data.response;
-        const cardIndex = data.cardIndex;
-        console.log(user, "sent", response, "in response to", thingList[cardIndex]);
-        submitAnswer(user, response, cardIndex);
-        updateState();
+        const user = data.user
+        const response = data.response
+        const cardIndex = data.cardIndex
+        console.log(`"${user}" send "${response}" in response to "${thingList[cardIndex]}"`)
+        submitAnswer(user, response, cardIndex)
+        updateState()
     });
 
     socket.on('submit-guess', data => {
-        const user = data.user;
-        const submissionIndex = data.submissionIndex;
-        const suspect = data.suspect;
-        const cardIndex = data.cardIndex;
-        console.log(user, "guesses that", suspect, "wrote", roundState.submissions[submissionIndex], "to answer", thingList[roundState.cardIndex]);
-        submitGuess(user, suspect, submissionIndex, cardIndex);
-        updateState();
+        const user = data.user
+        const submissionIndex = data.submissionIndex
+        const suspect = data.suspect
+        const cardIndex = data.cardIndex
+        console.log(`"${user}" guesses that "${suspect}" wrote "${roundState.submissions[submissionIndex].response}" to answer "${thingList[roundState.cardIndex]}"`);
+        submitGuess(user, suspect, submissionIndex, cardIndex)
+        updateState()
     });
 
 });
