@@ -54,6 +54,8 @@ $color-gray: #95989A;
 .page-center {
 	align-items: center;
 	justify-content: center;
+	overflow: scroll;
+	padding-top: 55px;
 }
 
 /* Heading rules */
@@ -136,6 +138,7 @@ header {
 }
 .user-pill {
 	@include pill-box($color-player, white, $color-player);
+	padding: 0 10px;
 }
 
 .thing-pill.active {

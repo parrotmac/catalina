@@ -3,7 +3,10 @@ import NameScreen from 'client/NameScreen'
 import StartScreen from 'client/StartScreen'
 import RespondScreen from 'client/RespondScreen'
 import WaitingScreen from 'client/WaitingScreen'
+import JudgementScreen from 'client/JudgementScreen'
+import JudgementResults from "client/JudgementResults";
 import { joinAs, requestThingsList, nextRound, setStatusCallback, submitResponse } from 'client/api'
+import {nextSubmission, submitGuess} from "./api";
 
 export default class extends Component {
 	constructor () {
@@ -48,7 +51,14 @@ export default class extends Component {
 			}
 		}
 		if (judgingSubmissionIndex > -1) {
-			return null
+
+            if (submissions[judgingSubmissionIndex].guesses.length === submissions.length) {
+            	return <JudgementResults username={ username } submissions={ submissions }
+										judgingSubmissionIndex={ judgingSubmissionIndex } onNext={this.onNextGuess} />
+			} else {
+                return <JudgementScreen username={ username } submissions={ submissions }
+										judgingSubmissionIndex={judgingSubmissionIndex} onGuess={this.onGuessCast}/>
+            }
 		}
 		return (
 			<StartScreen username={ username } title="START" onStart={ this.onStartGame }/>
@@ -77,5 +87,10 @@ export default class extends Component {
 	onResponse = (response) => {
 		submitResponse (this.state.username, response, this.state.cardIndex)
 	}
+	onGuessCast = (suspect) => {
+		submitGuess(this.state.username, this.state.judgingSubmissionIndex, suspect, this.state.cardIndex)
+	}
+    onNextGuess = () => {
+		nextSubmission(this.state.username)
+	}
 }
-

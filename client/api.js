@@ -7,7 +7,7 @@ export function joinAs(username, callback) {
         return
     }
 
-    socket.on('user-join-response', callback);
+    socket.on('user-join-response', callback)
     /*
     callback gets called with an object containing
     {
@@ -19,7 +19,7 @@ export function joinAs(username, callback) {
 
     socket.emit("join-as", {
         username: username
-    });
+    })
 }
 
 export function removeUser(username, callback) {
@@ -41,7 +41,7 @@ export function removeUser(username, callback) {
 
     socket.emit("remove-user", {
         username: username
-    });
+    })
 }
 
 export function requestThingsList(callback) {
@@ -51,21 +51,21 @@ export function requestThingsList(callback) {
         return
     }
 
-    socket.on("things-list", callback);
+    socket.on("things-list", callback)
     /*
     {
         thingsList: <(array<string>) List of strings of questions>
     }
     */
 
-    socket.emit('request-things-list', {});
+    socket.emit('request-things-list', {})
 }
 
 export function nextRound(user) {
     /* Call to start game or advance to next round */
     socket.emit("next-round", {
         user: user
-    });
+    })
 }
 
 export function submitResponse(user, response, cardIndex) {
@@ -98,14 +98,15 @@ export function submitGuess(user, submissionIndex, suspect, cardIndex) {
 export function nextSubmission(user) {
     socket.emit('next-submission', {
         user: user
-    });
+    })
 }
 
 let statusCallback = () => {};
 export function setStatusCallback(callback) {
-    statusCallback = callback;
+    statusCallback = callback
 }
 
 socket.on('status-update', newState => {
-    statusCallback(newState);
-});
+    console.log(newState)
+    statusCallback(newState)
+})
