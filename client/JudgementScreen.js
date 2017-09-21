@@ -22,7 +22,7 @@ export default class extends Component {
                 <div class="page page-center">
                     <p class="">Who said "{submissions[judgingSubmissionIndex].response}"?</p>
                     <div>
-                        {submissions.map((s) => <UserButton key={s.username} style={{display: this.state.canGuess?"block":"hidden"}} onClick={e => this.handleGuessSelected(s, e)} username={s.username}/>)}
+                        {submissions.map((s) => <UserButton key={s.username} style={{display: this.state.canGuess?"block":"none"}} onClick={e => this.handleGuessSelected(s, e)} username={s.username}/>)}
                         {this.state.canGuess?"":<p>Waiting on others to guess</p>}
                     </div>
                 </div>
